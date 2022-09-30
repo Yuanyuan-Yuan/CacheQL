@@ -9,7 +9,7 @@ Research Artifact of USENIX Security 2023 paper: *CacheQL: Quantifying and Local
 
 The preprint of our paper is available at: https://arxiv.org/pdf/2209.14952.pdf
 
-## Addition Results
+## Additional Results
 
 1. Quantification results of CacheQL, which depict how the leaked bits are distributed among most vulnerable functions in
 OpenSSL, MbedTLS, and Libgcrypt, are available at: https://sites.google.com/view/cache-ql#h.7h3q1uiutamk
