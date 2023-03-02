@@ -26,6 +26,6 @@ Thank you for your interest in our work! 😬
 
 Since I will be very busy in next few months, I plan to release the code, data<s>, and our findlings before the **fall deadline of USENIX Security'23 Artifact Evaluation** (i.e., Tuesday, March 7, 2023)</s> in mid-April (hopefully). If you have any questions and want a quick reply, do not hesitate to contact me directly via yyuanaq@cse.ust.hk.
 
-*Update (25 Feb. 2023):* I just realized I have missed the registration deadline of USENIX Security'23 AE... 🫠 Hopefully, I should have more time next month to prepare this artifact.
+*Update (25 Feb. 2023):* I just realized I have missed the fall registration deadline of USENIX Security'23 AE... 🫠 Hopefully, I should have more time next month to prepare this artifact.
 
 *Update (30 Sep. 2022):* The preprint and identified leakage sites are made available. Feel free to let me know if you have any questions.
