@@ -5,7 +5,7 @@ Research Artifact of USENIX Security 2023 paper: *CacheQL: Quantifying and Local
 
 Thank you for your interest in our work! 😬
 
-Since I will be very busy in next few months, I plan to release the code, data<s>, and our findlings before the **fall deadline of USENIX Security'23 Artifact Evaluation** (i.e., Tuesday, March 7, 2023)</s> in mid-April (hopefully). If you have any questions and want a quick reply, do not hesitate to contact me directly via yyuanaq@cse.ust.hk.
+*Update (26 Apr. 2023):* An unpolished version of the code is released at the [project page](https://sites.google.com/view/cache-ql/code). Still being swamped with lots of other things... 🥲 I will restructure the code and write the document in this repo before the next deadline of USENIX Security'23 AE (June 9, 2023).
 
 *Update (25 Feb. 2023):* I just realized I have missed the fall registration deadline of USENIX Security'23 AE... 🫠 The next AE submission is in June. Hopefully, I should have more time next month to prepare this artifact.
 
