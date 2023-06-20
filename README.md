@@ -19,6 +19,8 @@ Preprint: https://arxiv.org/pdf/2209.14952.pdf
 
 This repo is organized as follows:
 
+- `data` - This folder provides scripts for processing data.
+
 - `pin` - This folder provides our pintools for logging secret-dependent data access (SDA) and control branch (SCB).
 
 - `pp` - This folder provides scripts for logging cache set accesses with Prime+Probe.
@@ -49,6 +51,8 @@ See [SOFTWARE](https://github.com/Yuanyuan-Yuan/CacheQL/tree/main/software) for 
 
 You need to first set up all related paths in `config.py`. We have set some default paths w.r.t. this project; you may need to update them if you want to analyze your own data and software.
 
+See [DATA](https://github.com/Yuanyuan-Yuan/CacheQL/tree/main/data) for how the `data` folder is organized according to the current `config.py`.
+
 ## Datasets
 
 Each dataset is implemented as one Pytorch Dataset class in `dataset.py`.
@@ -63,11 +67,11 @@ python generate_key.py
 ```
 
 Run the above commands to generate private keys for OpenSSL, MbedTLS, and Libgcrypt.
-`generate_key.py` also converts the generated keys into `.npz` format for being loaded by Pytorch.
+`generate_key.py` also converts the generated keys into `.npz` format for support of being loaded by Pytorch.
 
 #### Implementations
 
-`dataset.py` implements the following four datasets for crypto software. You can use them as Pytorch Dataset.
+`dataset.py` implements the following four datasets for crypto software. You can use them as Pytorch Datasets.
 
 - `RSADatasetMulti` - For analyzing the whole trace of crypto software (logged by Pin).
 
@@ -90,11 +94,11 @@ cd data
 python celeba_process.py
 ```
 
-The dataset will be splitted into different subfolders and be cropped and resized into $128 \times 128$. Several processed examples are given in the `data/celeba_crop128/train` folder.
+The dataset will be splitted into different subfolders and be cropped and resized into $128 \times 128$. Several processed examples are given in the `data/celeba_crop128/fit` folder.
 
 #### Implementation
 
-The dataset class for CelebA is implemented as the `ImageDatasetMulti` class in `dataset.py`. You can use it as Pytorch Dataset.
+The dataset class for CelebA is implemented using the `ImageDatasetMulti` class in `dataset.py`. You can use it as one Pytorch Dataset.
 
 ## Logging Side Channel Traces
 
@@ -113,7 +117,7 @@ We provide our pintools in the `pin` folder.
 Download Pin from [here](https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-binary-instrumentation-tool-downloads.html) and unzip it to `PIN_ROOT` (specify this path by yourself). Then, run the following commands:
 
 ```bash
-cp -r pin /PIN_ROOT/source/tools/ManualExamples/
+cp -r pin/*.cpp /PIN_ROOT/source/tools/ManualExamples/
 cd /PIN_ROOT/source/tools/ManualExamples/
 make obj-intel64/SCB.so TARGET=intel64
 make obj-intel64/SDA.so TARGET=intel64
@@ -139,17 +143,19 @@ You can use the scripts provided [here](https://github.com/Yuanyuan-Yuan/Manifol
 ### Prime+Probe
 
 We use [Mastik](https://cs.adelaide.edu.au/~yval/Mastik/) (Ver. 0.02) to launch Prime+Probe on L1 cache to collect the cache set accesses. We provide our scripts in `pp/Mastik`. 
-We highly recommend you to set the cache miss threshold in these scripts according to your machines.
+We recommend you setting the cache miss threshold in these scripts according to your machines.
 
 Suppose Mastik is downloaded into the path `/MASTIK`. Run the following commands:
 
 ```bash
-cp -r pp/Mastik /MASTIK/demo
+cp -r pp/Mastik/*.c /MASTIK/demo
 cd /MASTIK
 make
 ```
 
-We assume victim and spy are on the same CPU core and no other process is runing on this CPU core. First, run the following command to isolate the CPU core of `cpu_id`.
+We assume victim and spy are on the same CPU core and no other process is runing on this CPU core. 
+
+First, run the following command to isolate the `cpu_id`-th CPU core .
 
 ```bash
 sudo cset shield --cpu {cpu_id}
@@ -170,7 +176,7 @@ sudo cset shield --exec python run_pp.py -- {pp_crypto OR pp_media} {cpu_id} {se
 
 Run `python MI.py --software XXX --side YYY --setting ZZZ` to train a model and quantify leaks for the whole trace.
 
-- `--criterion` - The analyzed software. 
+- `--software` - The analyzed software. 
 ```python
 choices = [
     'rsa_openssl_0.9.7c', 'rsa_openssl_3.0.0',
@@ -184,7 +190,7 @@ choices = [
 - `--side` - The type of side channels logged via Pin.  
 choices = [`cacheline`, `cachebank`]
 
-- `--setting` - The setting of leakage.  
+- `--setting` - The setting of the leakage mode.  
 choices = [`SDA`, `SCB`]
 
 ### Crypto Software w/o Blinding
@@ -208,13 +214,14 @@ Run `python MI_image.py --software libjpeg-turbo-2.1.2 --side YYY --setting ZZZ`
 - `--side` - The type of side channels logged via Pin.  
 choices = [`cacheline`, `cachebank`]
 
-- `--setting` - The setting of leakage.  
+- `--setting` - The setting of leakage mode.  
 choices = [`SDA`, `SCB`]
 
 ### Real Attack Logs
 
-Run `python MI_image.py --software XXX --setting ZZZ --repeat_num 16` to train a model and quantify leaks in side channel records logged via Prime+Probe.
+Run `python MI_image.py --software XXX --setting ZZZ --repeat_num N` to train a model and quantify leaks in side channel records logged via Prime+Probe.
 
+- `--software` - The analyzed software. 
 ```python
 choices = [
     'rsa_openssl_0.9.7c', 'rsa_openssl_3.0.0',
@@ -228,13 +235,14 @@ choices = [
 - `--setting` - The setting of leakage.  
 choices = [`pp_dcache`, `pp_icache`]
 
-- `--repeat_num` - The number of repeats when performing Prime+Probe.
+- `--repeat_num` - The number of repeats when performing Prime+Probe.  
+choices = [`1`, `2`, `4`, `8`, `16`]
 
 ## Localizing Leakage Sites
 
-Run `python shapley --software XXX --side YYY --setting ZZZ --use_IG` to localize the leakage sites.
+Run `python shapley --software XXX --side YYY --setting ZZZ --use_IG 0` to localize the leakage sites.
 
-- `--use_IG` - Whether use Integrated Gradient to compute the gradients.  
+- `--use_IG` - Whether using Integrated Gradient to compute the gradients.  
 choices = [`0`, `1`]. Default is `0`, which uses the conventional method to compute gradients.
 
 ## Findings
@@ -248,7 +256,7 @@ We sincerely thank Janos Follath (developer of MbedTLS), Matt Caswell (developer
 
 ## Citation
 
-If CacheQL is helpful for your research, please consider cite our work as follow:
+If CacheQL is helpful for your research, please consider cite our work as follows:
 
 ```bib
 @inproceedings{yuan2023cacheql,

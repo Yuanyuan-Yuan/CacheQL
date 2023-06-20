@@ -21,6 +21,8 @@ openssl_aes_key_dir = os.path.join(key_dir, 'openssl-aes')
 
 image_dir = './data/celeba_crop128/'
 trace_dir = './data/trace/npz/'
+rsa_key_npz_dir = './data/key/npz/rsa/'
+aes_key_npz_dir = './data/key/npz/aes'
 inst_dir = '/data/trace/raw/'
 
 output_dir = './output'

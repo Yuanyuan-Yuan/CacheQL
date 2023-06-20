@@ -9,7 +9,7 @@ import config
 
 
 root_dir = config.key_dir
-npz_dir = os.path.join(config.key_dir, 'npz')
+npz_dir = os.path.join(config.key_dir, 'npz', 'rsa')
 key_dir = config.openssl_rsa_key_dir
 libg_dir = config.libgcrypt_rsa_key_dir
 

@@ -26,6 +26,11 @@ if __name__ == '__main__':
     print(args.exp_name)
 
     args.npz_dir = os.path.join(config.trace_dir, args.setting, args.software)
+
+    if 'rsa' in args.software:
+        args.key_dir = config.rsa_key_npz_dir
+    elif 'aes' in args.software:
+        args.key_dir = config.aes_key_npz_dir
     
     PADLENGTH = {
         'aes_openssl_3.0.0': {

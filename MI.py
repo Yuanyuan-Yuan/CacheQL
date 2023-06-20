@@ -221,6 +221,11 @@ if __name__ == '__main__':
 
     args.npz_dir = os.path.join(config.trace_dir, args.setting, args.software)
     
+    if 'rsa' in args.software:
+        args.key_dir = config.rsa_key_npz_dir
+    elif 'aes' in args.software:
+        args.key_dir = config.aes_key_npz_dir
+    
     (args.size, args.nc) = args.PADLENGTH['%s-%s' % (args.software, args.setting)]
     
     fp = open(os.path.join(config.output_dir, args.exp_name, 'log.txt'), 'a')
