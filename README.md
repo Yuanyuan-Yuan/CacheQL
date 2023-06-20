@@ -4,6 +4,10 @@ Research Artifact of USENIX Security 2023 Paper: *CacheQL: Quantifying and Local
 
 Preprint: https://arxiv.org/pdf/2209.14952.pdf
 
+## Note
+
+**Warning**: This repo is provided as-is and is only for research purposes. Please use it only on test systems with no sensitive data. You are responsible for protecting yourself, your data, and others from potential risks caused by this repo.
+
 
 ## Installation
 
