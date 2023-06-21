@@ -24,7 +24,7 @@ if __name__ == '__main__':
         args.exp_name = 'dec-mi-%s-%s' % (args.software, args.setting)
     print(args.exp_name)
 
-    args.npz_dir = os.path.join(config.trace_dir, args.setting, args.software)
+    args.npz_dir = os.path.join(config.trace_dec_dir, args.setting, args.software)
     
     if 'rsa' in args.software:
         args.key_dir = config.rsa_key_npz_dir
