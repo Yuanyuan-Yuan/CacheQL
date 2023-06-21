@@ -244,10 +244,27 @@ choices = [`1`, `2`, `4`, `8`, `16`]
 
 ## Localizing Leakage Sites
 
-Run `python shapley --software XXX --side YYY --setting ZZZ --use_IG 0` to localize the leakage sites.
+Run `python shapley.py --software XXX --side YYY --setting ZZZ --use_IG 0` to localize the leakage sites.
 
 - `--use_IG` - Whether using Integrated Gradient to compute the gradients.  
 choices = [`0`, `1`]. Default is `0`, which uses the conventional method to compute gradients.
+
+- `--software` - The analyzed software. 
+```python
+choices = [
+    'rsa_openssl_0.9.7c', 'rsa_openssl_3.0.0',
+    'rsa_mbedtls_2.15.0', 'rsa_mbedtls_3.0.0',
+    'rsa_sign_libgcrypt_1.6.1', 'rsa_sign_libgcrypt_1.9.4',
+    'aes_openssl_0.9.7c', 'aes_openssl_3.0.0',
+    'aes_mbedtls_2.15.0', 'aes_mbedtls_3.0.0',
+]
+```
+
+- `--side` - The type of side channels logged via Pin.  
+choices = [`cacheline`, `cachebank`]
+
+- `--setting` - The setting of the leakage mode.  
+choices = [`SDA`, `SCB`]
 
 ## Findings
 
