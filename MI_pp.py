@@ -20,9 +20,9 @@ if __name__ == '__main__':
     args = Params().parse()
 
     if len(args.side) > 0:
-        args.exp_name = 'pmi-%s-%s-%s' % (args.software, args.setting, args.side)
+        args.exp_name = 'mi-%s-%s-%s' % (args.software, args.setting, args.side)
     else:
-        args.exp_name = 'pmi-%s-%s' % (args.software, args.setting)
+        args.exp_name = 'mi-%s-%s' % (args.software, args.setting)
     print(args.exp_name)
 
     args.npz_dir = os.path.join(config.trace_dir, args.setting, args.software)
